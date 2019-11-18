@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: exercise
+spec:
+  podSelector:
+    matchLabels:
+      name: exercise
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: kube-system
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: nginx-ingress-controller
+      ports:
+        - protocol: TCP
+          port: http
