@@ -1,0 +1,14 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: k8s-exercise
+
+spec:
+  rules:
+    - host: exercise.minikube.xip.io
+      http:
+        paths:
+          - backend:
+              serviceName: exercise
+              servicePort: http
