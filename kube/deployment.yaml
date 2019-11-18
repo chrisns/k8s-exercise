@@ -1,0 +1,42 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: exercise
+  labels:
+    name: exercise
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      name: exercise
+  template:
+    metadata:
+      labels:
+        name: exercise
+    spec:
+      containers:
+        - image: chrisns/k8s-exercise
+          name: exercise
+          securityContext:
+            runAsUser: 1000
+            readOnlyRootFilesystem: true
+          resources:
+            limits:
+              memory: 64Mi
+              cpu: 0.1
+          ports:
+            - name: http
+              containerPort: 3000
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 12
+
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: http
+            initialDelaySeconds: 16
+            periodSeconds: 1
+      restartPolicy: Always
