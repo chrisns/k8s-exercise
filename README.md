@@ -24,7 +24,6 @@
 
 ```bash
 minikube start --memory=4096 --addons=ingress
-kubectl kustomize . | sed -e "s/minikube/$(minikube ip)/g" | kubectl apply -f -
 ```
 
 ## maybe if one can find a way to make ingress work with network policies and a cni:
